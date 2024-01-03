@@ -2,7 +2,12 @@ const request = require('supertest');
 const app = require('../server');
 const expect = require('chai').expect;
 
-describe('Integration Tests', () => {
+describe('Tests', () => {
+
+  it('Test test', async () => {
+    expect(true).to.equal(true);
+  });
+
   it('should set up the database table', async () => {
     // Your test logic here
     expect(true).to.equal(true);  // Replace with your actual test
@@ -42,9 +47,5 @@ describe('Integration Tests', () => {
     const response = await request(app).get('/ping');
     expect(response.status).to.equal(200);
     expect(response.text).to.equal('pong!');
-  });
-
-  it('should respond with "pong!" for /ping endpoint', async () => {
-    expect(true).to.equal(false);
   });
 });
