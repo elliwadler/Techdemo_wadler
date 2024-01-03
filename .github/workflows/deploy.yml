@@ -1,9 +1,9 @@
-name: Test on Dev
+name: CI/CD Pipeline, Test & Deploy new Version
 
 on:
   push:
     branches:
-      - dev
+      - main
 
 jobs:
   test:
@@ -53,6 +53,16 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Set Release Version
+        run: |
+          echo "BUILD_VERSION=$(date --rfc-3339=date)" >> ${GITHUB_ENV}
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
+        with:
+          images: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app
                   
       - name: build and push api
         id: build-push-api
@@ -61,4 +71,5 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app-dev:latest
+          tags: ${{ steps.meta.outputs.tags }}
+          labels:  ${{ steps.meta.outputs.labels }}
