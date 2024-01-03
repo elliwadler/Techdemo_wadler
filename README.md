@@ -11,3 +11,5 @@ https://medium.com/@avash700/ci-cd-made-easy-github-actions-docker-compose-and-w
 git tag v1.0
 git push origin v1.0
 
+Check if workflow runs
+Another check
