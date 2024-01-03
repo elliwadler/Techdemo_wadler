@@ -1,0 +1,26 @@
+version: "3"
+services:
+  db: 
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: topsecret
+      POSTGRES_USER: user_db
+      POSTGRES_DB: cats_db
+      POSTGRES_PORT: 5432
+
+  app:
+    container_name: my-techdemo-app
+    image: elliw01/my-techdemo-app:latest
+    ports:
+      - 13000:3000
+    environment:
+      NODE_ENV: development 
+
+  watchtower:
+    container_name: watchtower
+    image: containrrr/watchtower
+    environment:
+      - WATCHTOWER_CLEANUP=true
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: --interval 30 my-techdemo-app
