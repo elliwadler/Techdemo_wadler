@@ -72,4 +72,5 @@ jobs:
           file: Dockerfile
           push: true
           tags: ${{ steps.meta.outputs.tags }}
+           ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:latest
           labels: ${{ steps.meta.outputs.labels }}
