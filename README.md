@@ -3,13 +3,13 @@
 This application serves as a simple API for managing a database of cats. It utilizes Node.js with the Express framework and interacts with a PostgreSQL database through the node-postgres library. Below is a guide on using and setting up the application.
 
 ## Endpoints
-### GET /
+#### GET /
 Retrieves a list of all cats in the database.
 
-### POST /
+#### POST /
 Adds a new cat to the database. Requires a JSON payload with the name and breed of the cat.
 
-### GET /setup
+#### GET /setup
 Sets up the database by creating a cats table if it does not exist.
 
 #### Put /:id
