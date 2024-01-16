@@ -1,5 +1,6 @@
 FROM node:16
 
+# Set working directory
 WORKDIR /usr/src/app
 
 ENV NODE_ENV=development

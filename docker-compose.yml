@@ -1,5 +1,6 @@
 version: "3"
 services:
+  # Postgresql container
   db: 
     image: postgres
     environment:
@@ -8,6 +9,7 @@ services:
       POSTGRES_DB: cats_db
       POSTGRES_PORT: 5432
 
+  # The newest version of my app
   app:
     container_name: my-techdemo-app
     image: elliw01/my-techdemo-app:latest
@@ -16,6 +18,8 @@ services:
     environment:
       - NODE_ENV=development 
 
+  # Monitoring for Docker registry 
+  # if a new version is available it pull the latest image und restarts my-techdemo-app
   watchtower:
     container_name: watchtower
     image: containrrr/watchtower

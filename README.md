@@ -1,6 +1,6 @@
 # Techdemo - Cat Database API
 
-This application serves as a simple API for managing a database of cats. It utilizes Node.js with the Express framework and interacts with a PostgreSQL database through the node-postgres library. Below is a brief guide on using and setting up the application.
+This application serves as a simple API for managing a database of cats. It utilizes Node.js with the Express framework and interacts with a PostgreSQL database through the node-postgres library. Below is a guide on using and setting up the application.
 
 ## Endpoints
 ### GET /
@@ -12,27 +12,44 @@ Adds a new cat to the database. Requires a JSON payload with the name and breed 
 ### GET /setup
 Sets up the database by creating a cats table if it does not exist.
 
-### GET /ping
-A simple health check endpoint that responds with 'pong!'.
-
 #### Put /:id
-A simple Endpoint to update cats.
+Updates information about a cat based on the provided :id. Requires a JSON payload with the updated name and breed of the cat.
 
-## Git Hub Action
-In the deploy.yml are two Jobs defined.
-#### 1. Test Job
+#### Delete /:id
+Deltes the cat with the defined Id. 
 
-    Sets up a PostgeSQL Docker Image. Then clones the repository, then setup node and then the tests are executed. After the tests are finished the PostgreSQL container will be stopped and removed.
+## Git Hub Action Worfflow
 
-#### 2. Deploy Job
+The jobs defined in the depoy.yml file are triggered when a new tag is pushed. In the deploy.yml file, two jobs are defined:
 
-    When the tests succeeded an image of the application will be builded and pushed to docker hub. The tag of the image will be based on the tag which is pushed to gitHub. 
+1. Test Job
+Sets up a PostgreSQL Docker container.
+Clones the repository.
+Sets up Node.js.
+Executes the tests.
+After the tests are finished, the PostgreSQL container is stopped and removed.
 
-## Push Code to the Repository
+2. Deploy Job
+When the tests succeed, an image of the application is built and pushed to Docker Hub.
+The tag of the image is based on the tag pushed to GitHub
 
-git tag -a v{version Number} -m "commit message"
-git push origin v{version Number} 
-git push
+## Push a new Tag
+
+1. Create a new tag for the version: git tag -a v{version Number} -m "commit message"
+2. Push the tag to GitHub: git push origin v{version Number}
+
+## Docker Infrastructure
+My Docker application consists of three containers orchestrated using Docker Compose:
+
+1. **PostgreSQL Container (`db`):**
+   - Internally, the PostgreSQL service is accessible on its default port `5432` within the container.
+
+2. **Application Container (`app`):**
+   - Externally, the Node.js application is accessible on the host machine at `http://localhost:13000`.
+   - This is achieved through port mapping, where the host's port `13000` is mapped to the container's port `3000`.
+
+3. **Watchtower Container (`watchtower`):**
+   - Does not expose any ports externally; it communicates with Docker to monitor and update containers.
 
 ## References
 - https://www.youtube.com/watch?v=sDPw2Yp4JwE
