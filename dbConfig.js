@@ -6,5 +6,13 @@ const development = {
     database: 'cats_db',
   };
   
-  module.exports = development;
+  const testing = {
+    host: 'localhost',
+    port: 5432,
+    user: 'test_user',
+    password: 'test_secret',
+    database: 'test_cats_db',
+  };
+  
+  module.exports = process.env.NODE_ENV === 'development' ? development : testing;
   
