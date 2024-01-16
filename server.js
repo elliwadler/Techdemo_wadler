@@ -41,7 +41,7 @@ app.get('/:id', async (req, res) => {
     const catId = req.params.id;
     try {
         const data = await pool.query(`SELECT * FROM cats WHERE id = $1`, [catId]);
-        res.status(301).send({ cat: data.rows[0] });
+        res.status(200).send({ cat: data.rows[0] });
     } catch (err) {
         console.log(err);
         res.sendStatus(500);
