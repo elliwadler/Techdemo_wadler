@@ -2,8 +2,8 @@ name: CI/CD Pipeline, Test & Deploy new Version
 
 on:
   push:
-    branches:
-      - main
+    tags:
+      - '*'
 
 jobs:
   test:
