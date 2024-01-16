@@ -60,7 +60,10 @@ jobs:
         uses: docker/metadata-action@9ec57ed1fcdbf14dcef7dfbe97b2010124a938b7
         with:
           images: ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app
-                    
+         
+      - name: Debug Tags
+        run: echo  ${{ steps.meta.outputs.tags }}
+
       - name: Build and Push API
         id: build-push-api
         uses: docker/build-push-action@v3
@@ -68,8 +71,9 @@ jobs:
           context: .
           file: Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }},
-             ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:latest
+          tags: |
+            ${{ steps.meta.outputs.tags }}
+            ${{ secrets.DOCKER_USERNAME }}/my-techdemo-app:latest
           labels: ${{ steps.meta.outputs.labels }}
                   
 
