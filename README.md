@@ -28,7 +28,8 @@ In the deploy.yml are two Jobs defined.
 ## Push Code to the Repository
 
 git tag v{version Number}
-git push origin v{version Number}
+git push origin v{version Number} 
+s
 
 ## References
 - https://www.youtube.com/watch?v=sDPw2Yp4JwE
