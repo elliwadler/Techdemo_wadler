@@ -15,6 +15,8 @@ Sets up the database by creating a cats table if it does not exist.
 ### GET /ping
 A simple health check endpoint that responds with 'pong!'.
 
+#### Put /:id
+
 ## Git Hub Action
 In the deploy.yml are two Jobs defined.
 #### 1. Test Job

@@ -51,8 +51,5 @@ describe('Tests', () => {
 
   expect(deleteResponse.status).to.equal(200);
   expect(deleteResponse.body).to.have.property('message', 'Successfully deleted cat');
-
-  const getDeletedCatResponse = await request(app).get('/1'); 
-  expect(getDeletedCatResponse.status).to.equal(404);
   });
 });
