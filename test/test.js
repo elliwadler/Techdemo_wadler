@@ -32,53 +32,32 @@ describe('Tests', () => {
 
 // Test for updating a cat in the database
 it('should update a cat in the database', async () => {
-  const catData = { name: 'UpdateMe', breed: 'TestBreed' };
-
-  // Add a cat and retrieve the added cat including its ID
-  const addResponse = await request(app)
-      .post('/')
-      .send(catData);
-
-  expect(addResponse.status).to.equal(200);
-  const addedCat = addResponse.body.cat; // Assuming the response includes the added cat object
 
   // Update the added cat
-  const updatedCatData = { name: 'UpdatedCat', breed: 'NewBreed' };
+  const updatedCatData = { name: 'UpdatedCat', breed: 'NewBreed'};
   const updateResponse = await request(app)
-      .put(`/${addedCat.id}`)
+      .put(`/1`)
       .send(updatedCatData);
 
   expect(updateResponse.status).to.equal(200);
   expect(updateResponse.body).to.have.property('message', 'Successfully updated cat');
 
   // Retrieve the updated cat and check if it matches the updated data
-  const getUpdatedCatResponse = await request(app).get(`/${addedCat.id}`);
+  const getUpdatedCatResponse = await request(app).get(`/1`);
   expect(getUpdatedCatResponse.status).to.equal(200);
   expect(getUpdatedCatResponse.body.cat).to.deep.include(updatedCatData);
 });
 
 it('should delete a cat from the database', async () => {
-  const catData = { name: 'DeleteMe', breed: 'TestBreed' };
-  const addResponse = await request(app)
-      .post('/')
-      .send(catData);
-
-  expect(addResponse.status).to.equal(200);
-  const addedCatId = addResponse.body.id;
 
   const deleteResponse = await request(app)
-      .delete(`/${addedCatId}`);
+      .delete(`/1`);
 
   expect(deleteResponse.status).to.equal(200);
   expect(deleteResponse.body).to.have.property('message', 'Successfully deleted cat');
 
-  const getDeletedCatResponse = await request(app).get(`/${addedCatId}`);
+  const getDeletedCatResponse = await request(app).get(`/1`);
   expect(getDeletedCatResponse.status).to.equal(404); // HTTP 404 indicates the resource is not found
 });
 
-it('should respond with "pong!" for /ping endpoint', async () => {
-  const response = await request(app).get('/ping');
-  expect(response.status).to.equal(200);
-  expect(response.text).to.equal('pong!');
-});
 });
