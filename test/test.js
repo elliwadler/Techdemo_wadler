@@ -30,34 +30,29 @@ describe('Tests', () => {
     expect(addedCat).to.not.be.undefined;
   });
 
-// Test for updating a cat in the database
-it('should update a cat in the database', async () => {
+  it('should update a cat in the database', async () => {
 
-  // Update the added cat
-  const updatedCatData = { name: 'UpdatedCat', breed: 'NewBreed'};
-  const updateResponse = await request(app)
-      .put(`/1`)
-      .send(updatedCatData);
+    const updatedCatData = { name: 'UpdatedCat', breed: 'NewBreed'};
+    const updateResponse = await request(app)
+        .put('/1')
+        .send(updatedCatData);
 
-  expect(updateResponse.status).to.equal(200);
-  expect(updateResponse.body).to.have.property('message', 'Successfully updated cat');
+    expect(updateResponse.status).to.equal(200);
+    expect(updateResponse.body).to.have.property('message', 'Successfully updated cat');
 
-  // Retrieve the updated cat and check if it matches the updated data
-  const getUpdatedCatResponse = await request(app).get(`/1`);
-  expect(getUpdatedCatResponse.status).to.equal(200);
-  expect(getUpdatedCatResponse.body.cat).to.deep.include(updatedCatData);
-});
+    const getUpdatedCatResponse = await request(app).get(`/1`);
+    expect(getUpdatedCatResponse.status).to.equal(200);
+    expect(getUpdatedCatResponse.body.cat).to.deep.include(updatedCatData);
+  });
 
-it('should delete a cat from the database', async () => {
-
-  const deleteResponse = await request(app)
-      .delete(`/1`);
+  it('should delete a cat from the database', async () => {
+    const deleteResponse = await request(app)
+    .delete('/1');
 
   expect(deleteResponse.status).to.equal(200);
   expect(deleteResponse.body).to.have.property('message', 'Successfully deleted cat');
 
-  const getDeletedCatResponse = await request(app).get(`/1`);
-  expect(getDeletedCatResponse.status).to.equal(404); // HTTP 404 indicates the resource is not found
-});
-
+  const getDeletedCatResponse = await request(app).get('/1'); 
+  expect(getDeletedCatResponse.status).to.equal(404);
+  });
 });

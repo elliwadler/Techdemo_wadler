@@ -29,7 +29,7 @@ In the deploy.yml are two Jobs defined.
 
 git tag v{version Number}
 git push origin v{version Number} 
-sa
+git push
 
 ## References
 - https://www.youtube.com/watch?v=sDPw2Yp4JwE
