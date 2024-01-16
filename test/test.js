@@ -30,51 +30,55 @@ describe('Tests', () => {
     expect(addedCat).to.not.be.undefined;
   });
 
-  it('should update a cat in the database', async () => {
-    const catData = { name: 'UpdateMe', breed: 'TestBreed' };
-    const addResponse = await request(app)
+// Test for updating a cat in the database
+it('should update a cat in the database', async () => {
+  const catData = { name: 'UpdateMe', breed: 'TestBreed' };
+
+  // Add a cat and retrieve the added cat including its ID
+  const addResponse = await request(app)
       .post('/')
       .send(catData);
 
-    expect(addResponse.status).to.equal(200);
-    const addedCatId = addResponse.body.id;
+  expect(addResponse.status).to.equal(200);
+  const addedCat = addResponse.body.cat; // Assuming the response includes the added cat object
 
-    const updatedCatData = { name: 'UpdatedCat', breed: 'NewBreed' };
-    const updateResponse = await request(app)
-      .put(`/${addedCatId}`)
+  // Update the added cat
+  const updatedCatData = { name: 'UpdatedCat', breed: 'NewBreed' };
+  const updateResponse = await request(app)
+      .put(`/${addedCat.id}`)
       .send(updatedCatData);
 
-    expect(updateResponse.status).to.equal(200);
-    expect(updateResponse.body).to.have.property('message', 'Successfully updated cat');
+  expect(updateResponse.status).to.equal(200);
+  expect(updateResponse.body).to.have.property('message', 'Successfully updated cat');
 
-    const getUpdatedCatResponse = await request(app).get(`/${addedCatId}`);
-    expect(getUpdatedCatResponse.status).to.equal(200);
-    expect(getUpdatedCatResponse.body.cat).to.deep.include(updatedCatData);
-  });
+  // Retrieve the updated cat and check if it matches the updated data
+  const getUpdatedCatResponse = await request(app).get(`/${addedCat.id}`);
+  expect(getUpdatedCatResponse.status).to.equal(200);
+  expect(getUpdatedCatResponse.body.cat).to.deep.include(updatedCatData);
+});
 
-  it('should delete a cat from the database', async () => {
- 
-    const catData = { name: 'DeleteMe', breed: 'TestBreed' };
-    const addResponse = await request(app)
+it('should delete a cat from the database', async () => {
+  const catData = { name: 'DeleteMe', breed: 'TestBreed' };
+  const addResponse = await request(app)
       .post('/')
       .send(catData);
 
-    expect(addResponse.status).to.equal(200);
-    const addedCatId = addResponse.body.id;
+  expect(addResponse.status).to.equal(200);
+  const addedCatId = addResponse.body.id;
 
-    const deleteResponse = await request(app)
+  const deleteResponse = await request(app)
       .delete(`/${addedCatId}`);
 
-    expect(deleteResponse.status).to.equal(200);
-    expect(deleteResponse.body).to.have.property('message', 'Successfully deleted cat');
+  expect(deleteResponse.status).to.equal(200);
+  expect(deleteResponse.body).to.have.property('message', 'Successfully deleted cat');
 
-    const getDeletedCatResponse = await request(app).get(`/${addedCatId}`);
-    expect(getDeletedCatResponse.status).to.equal(500); 
-  });
+  const getDeletedCatResponse = await request(app).get(`/${addedCatId}`);
+  expect(getDeletedCatResponse.status).to.equal(404); // HTTP 404 indicates the resource is not found
+});
 
-  it('should respond with "pong!" for /ping endpoint', async () => {
-    const response = await request(app).get('/ping');
-    expect(response.status).to.equal(200);
-    expect(response.text).to.equal('pong!');
-  });
+it('should respond with "pong!" for /ping endpoint', async () => {
+  const response = await request(app).get('/ping');
+  expect(response.status).to.equal(200);
+  expect(response.text).to.equal('pong!');
+});
 });
