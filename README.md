@@ -16,7 +16,7 @@ Sets up the database by creating a cats table if it does not exist.
 A simple health check endpoint that responds with 'pong!'.
 
 #### Put /:id
-A simple Endpoint
+A simple Endpoint to update cats.
 
 ## Git Hub Action
 In the deploy.yml are two Jobs defined.
@@ -30,7 +30,7 @@ In the deploy.yml are two Jobs defined.
 
 ## Push Code to the Repository
 
-git tag v{version Number}
+git tag -a v{version Number} -m "commit message"
 git push origin v{version Number} 
 git push
 

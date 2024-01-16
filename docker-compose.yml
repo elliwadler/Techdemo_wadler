@@ -14,7 +14,7 @@ services:
     ports:
       - 13000:3000
     environment:
-      NODE_ENV: development 
+      - NODE_ENV: development 
 
   watchtower:
     container_name: watchtower

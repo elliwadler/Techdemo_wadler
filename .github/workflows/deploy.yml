@@ -36,6 +36,10 @@ jobs:
       - name: Run Tests
         id: test
         run: CI=true npm test
+        
+      - name: Remove PostgreSQL Container
+        if: always()
+        run: docker stop postgres && docker rm postgres
 
   deploy:
     name: Build && Push Image to Docker Hub
@@ -43,7 +47,7 @@ jobs:
     needs: test
     if: ${{ needs.test.result == 'success' }}
     env:
-      NODE_ENV: production 
+      NODE_ENV: development
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3

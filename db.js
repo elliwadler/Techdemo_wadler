@@ -1,16 +1,6 @@
 const { Pool } = require('pg');
-const dbConfig = require('./dbConfig');
 
-let pool_test;
 let pool_dev;
-
-pool_test = new Pool({
-    host: 'localhost',
-    port: 5432,
-    user: 'test_user',
-    password: 'test_secret',
-    database: 'test_cats_db',
-});
 
 pool_dev = new Pool({
     host: 'db',
@@ -20,4 +10,4 @@ pool_dev = new Pool({
     database: 'cats_db',
 });
 
-module.exports = process.env.NODE_ENV === 'test' ? pool_dev : pool_test;
+module.exports =  pool_dev;
