@@ -10,7 +10,7 @@ services:
 
   app:
     container_name: my-techdemo-app
-    image: my-techdemo-app:latest
+    image: elliw01/my-techdemo-app:latest
     ports:
       - 13000:3000
     environment:
